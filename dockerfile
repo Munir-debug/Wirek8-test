@@ -1,10 +1,13 @@
-FROM python:3.8.2
-COPY . /app
+FROM python:3.6
+
 WORKDIR /app
-RUN apt-get update
-RUN apt-get install -y python3-pip 
-RUN chmod +rwx test.py
-RUN python3 test.py
-ENTRYPOINT ["python"]
-CMD ["test.py"]
+
+COPY src/requirements.txt ./
+
+RUN pip install -r requirements.txt
+
+COPY src /app
+
 EXPOSE 5000
+
+CMD [ "python", "test.py" ]
